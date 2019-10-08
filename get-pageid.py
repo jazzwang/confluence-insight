@@ -9,7 +9,7 @@ try:
     space_key = os.environ["SPACE_KEY"]
 except:
     print("Please define environment variable 'BASE_URL' and 'SPACE_KEY'.")
-    print("Ex: HOME_URL  = https://cwiki.apache.org/confluence/display/HADOOP2")
+    print("Ex: HOME_URL  = https://cwiki.apache.org/confluence")
     print("    BASE_URL  = https://cwiki.apache.org")
     print("    SPACE_KEY = HADOOP2")
     exit(1)

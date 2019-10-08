@@ -9,13 +9,14 @@ try:
     space_key = os.environ["SPACE_KEY"]
 except:
     print("Please define environment variable 'BASE_URL' and 'SPACE_KEY'.")
-    print("Ex: HOME_URL  = https://cwiki.apache.org/confluence/display/HADOOP2")
+    print("Ex: https://cwiki.apache.org/confluence/display/HADOOP2")
+    print("    HOME_URL  = https://cwiki.apache.org/confluence")
     print("    BASE_URL  = https://cwiki.apache.org")
     print("    SPACE_KEY = HADOOP2")
     exit(1)
 
 driver = webdriver.Chrome()
-driver.get(home_url)
+driver.get(home_url + "/pages/reorderpages.action?key=" + space_key)
 
 # TODO: need to rewrite the recursive condition to expand all closed tree
 more_pages = True
