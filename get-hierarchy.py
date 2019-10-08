@@ -16,7 +16,7 @@ except:
 driver = webdriver.Chrome()
 driver.get(base_url + "/pages/reorderpages.action?key=" + space_key)
 
-for x in range(5):
+for x in range(2000):
     try:
         node = driver.find_element_by_class_name("closed")
         node.find_element_by_class_name("click-zone").click()
