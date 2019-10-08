@@ -4,30 +4,33 @@ from bs4 import BeautifulSoup
 import os
 
 try:
+    home_url  = os.environ["HOME_URL"]
     base_url  = os.environ["BASE_URL"]
     space_key = os.environ["SPACE_KEY"]
 except:
     print("Please define environment variable 'BASE_URL' and 'SPACE_KEY'.")
-    print("If the confluence URL is 'https://cwiki.apache.org/confluence/display/HADOOP2',")
-    print("BASE_URL  = https://cwiki.apache.org/confluence")
-    print("SPACE_KEY = HADOOP2")
+    print("Ex: HOME_URL  = https://cwiki.apache.org/confluence/display/HADOOP2")
+    print("    BASE_URL  = https://cwiki.apache.org")
+    print("    SPACE_KEY = HADOOP2")
     exit(1)
 
 driver = webdriver.Chrome()
-driver.get(base_url + "/pages/reorderpages.action?key=" + space_key)
+driver.get(home_url)
 
-for x in range(2000):
+# TODO: need to rewrite the recursive condition to expand all closed tree
+more_pages = True
+while more_pages:
     try:
         node = driver.find_element_by_class_name("closed")
         node.find_element_by_class_name("click-zone").click()
     except:
-        pass
+        more_pages = False
 
 pages = open(space_key + '_links.csv','w+')
 
 soup = BeautifulSoup(driver.page_source,"lxml")
 
 for block in soup.select('#tree-div a[href^="/"]'):
-    print(block.get('href'),file=pages)
+    print(base_url + block.get('href'),file=pages)
 
 driver.quit()
