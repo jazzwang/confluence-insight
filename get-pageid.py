@@ -9,12 +9,13 @@ try:
     space_key = os.environ["SPACE_KEY"]
 except:
     print("Please define environment variable 'BASE_URL' and 'SPACE_KEY'.")
-    print("Ex: HOME_URL  = https://cwiki.apache.org/confluence")
+    print("Ex: https://cwiki.apache.org/confluence/display/HADOOP2")
+    print("    HOME_URL  = https://cwiki.apache.org/confluence")
     print("    BASE_URL  = https://cwiki.apache.org")
     print("    SPACE_KEY = HADOOP2")
     exit(1)
 
-with open(space_key+'_links.csv','r') as f:
+with open(space_key+'_pages.csv','r') as f:
     reader = csv.reader(f)
     urls = list(reader)
 

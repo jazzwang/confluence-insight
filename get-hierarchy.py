@@ -27,7 +27,7 @@ while more_pages:
     except:
         more_pages = False
 
-pages = open(space_key + '_links.csv','w+')
+pages = open(space_key + '_pages.csv','w+')
 
 soup = BeautifulSoup(driver.page_source,"lxml")
 
