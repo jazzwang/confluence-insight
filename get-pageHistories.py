@@ -31,8 +31,17 @@ for pageId in pageIds:
     soup = BeautifulSoup(driver.page_source,"lxml")
     table = soup.find(id = "page-history-container")
     cols = table.select('td')
-    version = cols[0].find('input').get('value')
-    published = cols[2].contents[0].lstrip().rstrip()
-    contributor_id = cols[3].find('img').get('title')
-    contributor_name = cols[3].find('a').contents[0]
-    print(version + ";" + published + ";" + contributor_id + ";" + contributor_name)
+    current_version = cols[0].find('input').get('value')
+    count = int(current_version)
+    for i in range(count):
+        version = str(count)
+        published = cols[6*i+2].contents[0].lstrip().rstrip()
+        contributor_id = cols[6*i+3].find('img').get('title')
+        if (contributor_id != ''):
+            contributor_name = cols[6*i+3].find('a').contents[0]
+        else:
+            contributor_name = "Anonymous"
+        print(pageId[2] + ";" + version + ";" + published + ";" + contributor_id + ";" + contributor_name, file = pageHistories)
+        count = count-1
+
+driver.quit()
