@@ -29,19 +29,17 @@ pageHistories = open(space_key+"_pageHistories.csv","w+")
 for pageId in pageIds:
     driver.get(home_url + "/pages/viewpreviousversions.action?pageId=" + pageId[2])
     soup = BeautifulSoup(driver.page_source,"lxml")
-    table = soup.find(id = "page-history-container")
-    cols = table.select('td')
-    current_version = cols[0].find('input').get('value')
-    count = int(current_version)
+    cols = soup.select("#page-history-container tbody tr td")
+    count = int(cols[0].find('input').get('value'))
     for i in range(count):
-        version = str(count)
-        published = cols[6*i+2].contents[0].lstrip().rstrip()
-        contributor_id = cols[6*i+3].find('img').get('title')
-        if (contributor_id != ''):
+        try:
+            version          = cols[6*i].find('input').get('value')
+            published        = cols[6*i+2].contents[0].lstrip().rstrip()
+            contributor_id   = cols[6*i+3].find('div').get('data-username')
             contributor_name = cols[6*i+3].find('a').contents[0]
-        else:
+        except AttributeError: 
+            print(cols[6*i+3])
             contributor_name = "Anonymous"
         print(pageId[2] + ";" + version + ";" + published + ";" + contributor_id + ";" + contributor_name, file = pageHistories)
-        count = count-1
 
 driver.quit()
