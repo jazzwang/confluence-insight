@@ -38,8 +38,11 @@ for pageId in pageIds:
             contributor_id   = cols[6*i+3].find('div').get('data-username')
             contributor_name = cols[6*i+3].find('a').contents[0]
         except AttributeError: 
+            print("#Exception `AttributeError` ----------------------")
             print(cols[6*i+3])
+            contributor_id   = "anonymous"
             contributor_name = "Anonymous"
+
         print(pageId[2] + ";" + version + ";" + published + ";" + contributor_id + ";" + contributor_name, file = pageHistories)
 
 driver.quit()
