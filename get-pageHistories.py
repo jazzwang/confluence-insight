@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# References: 
-# [1] https://kite.com/python/examples/4420/beautifulsoup-parse-an-html-table-and-write-to-a-csv
+## References:
+## [1] https://stackoverflow.com/questions/14257373/skip-the-headers-when-editing-a-csv-file-using-python
+## [2] https://docs.python.org/3/library/functions.html#next
 
 from selenium import webdriver
 from bs4 import BeautifulSoup
@@ -21,10 +22,13 @@ except:
 
 with open(space_key+'_pageIds.csv','r') as f:
     reader = csv.reader(f, delimiter=';')
+    next(reader, None)  # skip the input CSV headers [1][2]
     pageIds = list(reader)
 
 driver = webdriver.Chrome()
 pageHistories = open(space_key+"_pageHistories.csv","w+")
+## Write CSV headers
+print("pageId ; version ; published ; contributor_id ; contributor_name", file = pageHistories)
 
 for pageId in pageIds:
     driver.get(home_url + "/pages/viewpreviousversions.action?pageId=" + pageId[2])

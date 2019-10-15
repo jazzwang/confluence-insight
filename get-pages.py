@@ -28,6 +28,8 @@ while more_pages:
         more_pages = False
 
 pages = open(space_key + '_pages.csv','w+')
+## Write CSV headers
+print("page_url",file=pages)
 
 soup = BeautifulSoup(driver.page_source,"lxml")
 

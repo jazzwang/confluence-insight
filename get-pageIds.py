@@ -1,4 +1,9 @@
 # -*- coding: utf-8 -*-
+
+## References:
+## [1] https://stackoverflow.com/questions/14257373/skip-the-headers-when-editing-a-csv-file-using-python
+## [2] https://docs.python.org/3/library/functions.html#next
+
 from selenium import webdriver
 from bs4 import BeautifulSoup
 import os, csv
@@ -17,20 +22,25 @@ except:
 
 with open(space_key+'_pages.csv','r') as f:
     reader = csv.reader(f)
+    next(reader, None)  # skip the input CSV headers [1][2]
     urls = list(reader)
 
 driver = webdriver.Chrome()
 pageIds = open(space_key+"_pageIds.csv","w+")
 
+## Write CSV headers
+print("page_url ; pageId_url ; pageId ; page_size", file=pageIds)
+
 for url in urls:
-        source_url = url[0]
-        driver.get(source_url)
+        page_url = url[0]
+        driver.get(page_url)
         driver.find_element_by_id("action-menu-link").click()
         soup = BeautifulSoup(driver.page_source,"lxml")
         
         for block in soup.select('#view-page-info-link'):
-            target_url = base_url + block.get('href')
-            pageId = target_url.split('=')[1]
-            print(source_url + ";" + target_url + ";" + pageId, file=pageIds)
+            pageId_url = base_url + block.get('href')
+            pageId = pageId_url.split('=')[1]
+            page_size = str(len(driver.page_source))
+            print(page_url + ";" + pageId_url + ";" + pageId + ";" + page_size, file=pageIds)
         
 driver.quit()
