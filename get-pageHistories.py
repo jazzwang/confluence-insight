@@ -28,7 +28,7 @@ with open(space_key+'_pageIds.csv','r') as f:
 driver = webdriver.Chrome()
 pageHistories = open(space_key+"_pageHistories.csv","w+")
 ## Write CSV headers
-print("pageId ; version ; published ; contributor_id ; contributor_name", file = pageHistories)
+print("pageId;version;published;contributor_id;contributor_name", file = pageHistories)
 
 for pageId in pageIds:
     driver.get(home_url + "/pages/viewpreviousversions.action?pageId=" + pageId[2])

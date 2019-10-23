@@ -29,7 +29,7 @@ driver = webdriver.Chrome()
 pageIds = open(space_key+"_pageIds.csv","w+")
 
 ## Write CSV headers
-print("page_url ; pageId_url ; pageId ; page_size", file=pageIds)
+print("page_url;pageId_url;pageId;page_size", file=pageIds)
 
 for url in urls:
         page_url = url[0]
