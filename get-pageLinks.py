@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 
+import os, csv
+import pandas as pd
 from selenium import webdriver
 from bs4 import BeautifulSoup
-import os, csv
 
 try:
     home_url  = os.environ["HOME_URL"]
@@ -29,7 +30,7 @@ for pageId in pageIds:
 driver = webdriver.Chrome()
 pageLinks = open(space_key+"_pageLinks.csv","w+")
 ## Write CSV headers
-print("pageId;linkedPageId", file = pageLinks)
+print("pageId;linkedId", file = pageLinks)
 
 for pageId in pageIds:
     driver.get(pageId[1])
@@ -41,3 +42,8 @@ for pageId in pageIds:
             print(pageId[2] + ";" + url2pageId[url], file = pageLinks)
 
 driver.quit()
+
+## add "pageId - contritbutor_id"
+df = pd.read_csv(space_key+"_pageHistories.csv", sep=';')
+for i in df[['pageId','contributor_id']].drop_duplicates().values.tolist(): 
+    print(str(i[0]) + ";" + i[1], file = pageLinks)
