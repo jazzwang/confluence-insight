@@ -5,3 +5,5 @@ export SPACE_KEY=HADOOP
 python3 get-pages.py
 python3 get-pageIds.py
 python3 get-pageHistories.py
+python3 get-pageLinks.py
+python3 gen-pageGraph.py
