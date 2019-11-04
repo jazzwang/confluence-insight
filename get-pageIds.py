@@ -4,9 +4,9 @@
 ## [1] https://stackoverflow.com/questions/14257373/skip-the-headers-when-editing-a-csv-file-using-python
 ## [2] https://docs.python.org/3/library/functions.html#next
 
+import os, csv, re
 from selenium import webdriver
 from bs4 import BeautifulSoup
-import os, csv
 
 try:
     home_url  = os.environ["HOME_URL"]
@@ -29,7 +29,7 @@ driver = webdriver.Chrome()
 pageIds = open(space_key+"_pageIds.csv","w+")
 
 ## Write CSV headers
-print("page_url;pageId_url;pageId;page_size", file=pageIds)
+print("page_url;pageId_url;pageId;page_size;attachments_count", file=pageIds)
 
 for url in urls:
         page_url = url[0]
@@ -41,6 +41,9 @@ for url in urls:
             pageId_url = base_url + block.get('href')
             pageId = pageId_url.split('=')[1]
             page_size = str(len(driver.page_source))
-            print(page_url + ";" + pageId_url + ";" + pageId + ";" + page_size, file=pageIds)
-        
+
+        attachments_count = re.split('[\(\)]',soup.select('.action-view-attachments span')[0].contents[2])[1]
+
+        print(page_url + ";" + pageId_url + ";" + pageId + ";" + page_size + ";" + attachments_count, file=pageIds)
+
 driver.quit()

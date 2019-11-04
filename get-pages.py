@@ -22,7 +22,7 @@ driver = webdriver.Chrome()
 driver.set_page_load_timeout(30)
 driver.get(home_url + "/pages/reorderpages.action?key=" + space_key)
 
-# MEMO: exception handling - page take time to load
+# Exception handling - page take time to load the tree structure
 ## https://selenium-python.readthedocs.io/waits.html
 ## https://selenium-python.readthedocs.io/api.html#locate-elements-by
 
@@ -30,7 +30,7 @@ WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.CLASS_NAME, "closed"))
     )
 
-# TODO: need to rewrite the recursive condition to expand all closed tree
+# Recursive condition to expand all closed tree
 more_pages = True
 while more_pages:
     try:
@@ -48,4 +48,4 @@ soup = BeautifulSoup(driver.page_source,"lxml")
 for block in soup.select('#tree-div a[href^="/"]'):
     print(base_url + block.get('href'),file=pages)
 
-#driver.quit()
+driver.quit()
