@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
-from selenium import webdriver
-from bs4 import BeautifulSoup
 import os
+from bs4 import BeautifulSoup
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 try:
     home_url  = os.environ["HOME_URL"]
@@ -16,7 +19,16 @@ except:
     exit(1)
 
 driver = webdriver.Chrome()
+driver.set_page_load_timeout(30)
 driver.get(home_url + "/pages/reorderpages.action?key=" + space_key)
+
+# MEMO: exception handling - page take time to load
+## https://selenium-python.readthedocs.io/waits.html
+## https://selenium-python.readthedocs.io/api.html#locate-elements-by
+
+WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.CLASS_NAME, "closed"))
+    )
 
 # TODO: need to rewrite the recursive condition to expand all closed tree
 more_pages = True
@@ -36,4 +48,4 @@ soup = BeautifulSoup(driver.page_source,"lxml")
 for block in soup.select('#tree-div a[href^="/"]'):
     print(base_url + block.get('href'),file=pages)
 
-driver.quit()
+#driver.quit()
