@@ -1,4 +1,3 @@
-
 # -*- coding: utf-8 -*-
 
 import os, csv
@@ -39,13 +38,13 @@ web = Web(
     },
 )
 
-web.display.charge = 250
+#web.display.charge = 250
+#web.display.linkLength = 50
 web.display.height = 800
-web.display.linkLength = 50
 web.display.colorBy = 'type'
 web.display.sizeBy = 'degree'
 #web.display.hideMenu = True
-web.display.showNodeNames = True
+#web.display.showNodeNames = True
 
 #web.show()
 web.save(space_key+'_pageGraph.html')
