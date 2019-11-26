@@ -1,7 +1,7 @@
 #!env python
 # -*- coding: utf-8 -*-
 
-import os
+import os, sys, re, time
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -20,8 +20,7 @@ driver.get(sys.argv[1])
 more_pages = True
 while more_pages:
     try:
-        node = driver.find_element_by_class_name("more-link")
-        node.find_element_by_class_name("more-link").click()
+        driver.find_element_by_class_name("more-link").click()
         time.sleep(1)
         driver.execute_script('window.scrollTo(0, document.body.scrollHeight);')
     except:
