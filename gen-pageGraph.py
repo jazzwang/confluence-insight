@@ -40,7 +40,8 @@ web = Web(
 
 #web.display.charge = 250
 #web.display.linkLength = 50
-web.display.height = 800
+web.display.height = 1024
+web.display.width = 1280
 web.display.colorBy = 'type'
 web.display.sizeBy = 'degree'
 #web.display.hideMenu = True
