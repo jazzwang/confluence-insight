@@ -4,9 +4,12 @@
 ## [1] https://stackoverflow.com/questions/14257373/skip-the-headers-when-editing-a-csv-file-using-python
 ## [2] https://docs.python.org/3/library/functions.html#next
 
-from selenium import webdriver
-from bs4 import BeautifulSoup
 import os, csv
+from bs4 import BeautifulSoup
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 try:
     home_url  = os.environ["HOME_URL"]
@@ -26,6 +29,9 @@ with open(space_key+'_pageIds.csv','r') as f:
     pageIds = list(reader)
 
 driver = webdriver.Chrome()
+## https://selenium-python.readthedocs.io/waits.html#implicit-waits
+driver.implicitly_wait(10) # seconds
+
 pageHistories = open(space_key+"_pageHistories.csv","w+")
 ## Write CSV headers
 print("pageId;version;published;contributor_id;contributor_name", file = pageHistories)
