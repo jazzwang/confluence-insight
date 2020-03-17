@@ -32,7 +32,11 @@ driver = webdriver.Chrome()
 ## https://selenium-python.readthedocs.io/waits.html#implicit-waits
 driver.implicitly_wait(10) # seconds
 
-pageHistories = open(space_key+"_pageHistories.csv","w+")
+## https://stackoverflow.com/questions/3167494/how-often-does-python-flush-to-a-file
+## defaul buffer size = 8192 (8 KB)
+## change to 512 Bytes
+## make it flush to dish faster because I use `wc` to check the progress of each task
+pageHistories = open(space_key+"_pageHistories.csv","w+", 512)
 ## Write CSV headers
 print("pageId;version;published;contributor_id;contributor_name", file = pageHistories)
 

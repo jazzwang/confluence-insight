@@ -31,8 +31,11 @@ with open(space_key+'_pages.csv','r') as f:
 driver = webdriver.Chrome()
 ## https://selenium-python.readthedocs.io/waits.html#implicit-waits
 driver.implicitly_wait(10) # seconds
-
-pageIds = open(space_key+"_pageIds.csv","w+")
+## https://stackoverflow.com/questions/3167494/how-often-does-python-flush-to-a-file
+## defaul buffer size = 8192 (8 KB)
+## change to 512 Bytes
+## make it flush to dish faster because I use `wc` to check the progress of each task
+pageIds = open(space_key+"_pageIds.csv","w+",512)
 
 ## Write CSV headers
 print("page_url;pageId_url;pageId;page_size;attachments_count", file=pageIds)

@@ -39,7 +39,11 @@ while more_pages:
     except:
         more_pages = False
 
-pages = open(space_key + '_pages.csv','w+')
+## https://stackoverflow.com/questions/3167494/how-often-does-python-flush-to-a-file
+## defaul buffer size = 8192 (8 KB)
+## change to 512 Bytes
+## make it flush to dish faster because I use `wc` to check the progress of each task
+pages = open(space_key + '_pages.csv','w+', 512)
 ## Write CSV headers
 print("page_url",file=pages)
 
