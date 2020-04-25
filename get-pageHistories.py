@@ -49,7 +49,7 @@ for pageId in pageIds:
         try:
             version          = cols[6*i].find('input').get('value')
             published        = cols[6*i+2].contents[0].lstrip().rstrip()
-            contributor_id   = cols[6*i+3].find('div').get('data-username')
+            contributor_id   = cols[6*i+3].find('a').get('data-username')
             contributor_name = cols[6*i+3].find('a').contents[0]
         except AttributeError: 
             print("#Exception `AttributeError` ----------------------")
