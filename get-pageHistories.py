@@ -50,7 +50,7 @@ for pageId in pageIds:
             version          = cols[6*i].find('input').get('value')
             published        = cols[6*i+2].contents[0].lstrip().rstrip()
             contributor_id   = cols[6*i+3].find('a').get('data-username')
-            contributor_name = cols[6*i+3].find('span').contents[0]
+            contributor_name = cols[6*i+3].find('a').contents[0]
         except AttributeError: 
             print("#Exception `AttributeError` ----------------------")
             print(cols[6*i+3])
