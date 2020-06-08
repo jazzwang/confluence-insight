@@ -5,6 +5,8 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.options import Options
+from webdriver_manager.chrome import ChromeDriverManager
 
 try:
     home_url  = os.environ["HOME_URL"]
@@ -18,7 +20,9 @@ except:
     print("    SPACE_KEY = HADOOP")
     exit(1)
 
-driver = webdriver.Chrome()
+options = Options()
+options.headless = True
+driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
 driver.set_page_load_timeout(30)
 driver.get(home_url + "/pages/reorderpages.action?key=" + space_key)
 

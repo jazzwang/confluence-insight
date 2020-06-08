@@ -10,6 +10,8 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.options import Options
+from webdriver_manager.chrome import ChromeDriverManager
 
 try:
     home_url  = os.environ["HOME_URL"]
@@ -28,7 +30,9 @@ with open(space_key+'_pages.csv','r') as f:
     next(reader, None)  # skip the input CSV headers [1][2]
     urls = list(reader)
 
-driver = webdriver.Chrome()
+options = Options()
+options.headless = True
+driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
 ## https://selenium-python.readthedocs.io/waits.html#implicit-waits
 driver.implicitly_wait(10) # seconds
 ## https://stackoverflow.com/questions/3167494/how-often-does-python-flush-to-a-file
