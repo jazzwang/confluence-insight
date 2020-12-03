@@ -5,6 +5,7 @@
 ## [2] https://docs.python.org/3/library/functions.html#next
 
 import os, csv
+import pandas as pd
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -62,5 +63,12 @@ for pageId in pageIds:
             contributor_name = "Anonymous"
 
         print(pageId[2] + ";" + version + ";" + published + ";" + contributor_id + ";" + contributor_name, file = pageHistories)
+
+pageHistories.close()
+
+df1 = pd.read_csv(space_key+"_pageIds.csv", sep=';')
+df2 = pd.read_csv(space_key+"_pageHistories.csv", sep=';')
+df3 = pd.merge(df1,df2,on='pageId')
+df3.to_csv(space_key+"_pageMerged.csv")
 
 driver.quit()
