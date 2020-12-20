@@ -1,6 +1,7 @@
 page_url
 https://cwiki.apache.org/confluence/display/BIGTOP/Index
 https://cwiki.apache.org/confluence/display/BIGTOP/Building
+https://cwiki.apache.org/confluence/display/BIGTOP/Bigtop+CI+Setup+Guide
 https://cwiki.apache.org/confluence/display/BIGTOP/Deploying+Build+Artifacts
 https://cwiki.apache.org/confluence/display/BIGTOP/How+to+build+Bigtop-1.0
 https://cwiki.apache.org/confluence/display/BIGTOP/How+to+build+Bigtop-1.1
@@ -20,6 +21,7 @@ https://cwiki.apache.org/confluence/display/BIGTOP/Developing+with+iTest
 https://cwiki.apache.org/confluence/display/BIGTOP/iTest.next
 https://cwiki.apache.org/confluence/display/BIGTOP/Known+Working+Tests
 https://cwiki.apache.org/confluence/display/BIGTOP/Next+generation+Puppet+code+for+Bigtop+deployment
+https://cwiki.apache.org/confluence/display/BIGTOP/Quickstart+Guide%3A+Bigtop+Integration+Test+Framework+2.0
 https://cwiki.apache.org/confluence/display/BIGTOP/Running+integration%2C+system%2C+and+package+tests
 https://cwiki.apache.org/confluence/display/BIGTOP/Setting+up+Bigtop+to+run+HBase+system+tests
 https://cwiki.apache.org/confluence/display/BIGTOP/Writing+integration+and+system+tests
@@ -43,15 +45,12 @@ https://cwiki.apache.org/confluence/display/BIGTOP/July%2713+Hackathon
 https://cwiki.apache.org/confluence/display/BIGTOP/Meetings
 https://cwiki.apache.org/confluence/display/BIGTOP/SCALE13x
 https://cwiki.apache.org/confluence/display/BIGTOP/General
-https://cwiki.apache.org/confluence/display/BIGTOP/Bigtop+CI+Setup+Guide
 https://cwiki.apache.org/confluence/display/BIGTOP/Bigtop+Website+Notes+and+Ideas
 https://cwiki.apache.org/confluence/pages/viewpage.action?pageId=27825348
 https://cwiki.apache.org/confluence/display/BIGTOP/How+to+release
 https://cwiki.apache.org/confluence/display/BIGTOP/Network+Ports+Reference
-https://cwiki.apache.org/confluence/display/BIGTOP/Overview+of+Bigtop+Supported+Feature+Set
 https://cwiki.apache.org/confluence/display/BIGTOP/Powered+By+Bigtop
 https://cwiki.apache.org/confluence/display/BIGTOP/Projects+to+add+to+future+releases
-https://cwiki.apache.org/confluence/display/BIGTOP/Quickstart+Guide%3A+Bigtop+Integration+Test+Framework+2.0
 https://cwiki.apache.org/confluence/pages/viewpage.action?pageId=51811206
 https://cwiki.apache.org/confluence/display/BIGTOP/Social+Media+Guidelines
 https://cwiki.apache.org/confluence/display/BIGTOP/The+Community+goals+of+BigTop
@@ -70,6 +69,7 @@ https://cwiki.apache.org/confluence/display/BIGTOP/How+to+install+Hadoop+distrib
 https://cwiki.apache.org/confluence/display/BIGTOP/How+to+install+Hadoop+distribution+from+Bigtop+0.5.0
 https://cwiki.apache.org/confluence/display/BIGTOP/How+to+install+Hadoop+distribution+from+Bigtop+0.6.0
 https://cwiki.apache.org/confluence/display/BIGTOP/How+to+install+Hadoop+distribution+from+Bigtop+1.2.0
+https://cwiki.apache.org/confluence/display/BIGTOP/Older+Documentation
 https://cwiki.apache.org/confluence/display/BIGTOP/Releases
 https://cwiki.apache.org/confluence/display/BIGTOP/Bigtop+1.0.0+Release
 https://cwiki.apache.org/confluence/display/BIGTOP/Bigtop+1.1.0+Release
@@ -78,7 +78,10 @@ https://cwiki.apache.org/confluence/display/BIGTOP/Bigtop+1.2.0+Release
 https://cwiki.apache.org/confluence/display/BIGTOP/Bigtop+1.2.1+Known+Issues
 https://cwiki.apache.org/confluence/display/BIGTOP/Bigtop+1.2.1+Release
 https://cwiki.apache.org/confluence/display/BIGTOP/Bigtop+1.3.0+Release
+https://cwiki.apache.org/confluence/display/BIGTOP/Bigtop+1.4.0+Release
 https://cwiki.apache.org/confluence/display/BIGTOP/List+of+known+issues+on+various+platforms
+https://cwiki.apache.org/confluence/display/BIGTOP/Overview+of+Bigtop+1.4.0+Support+Matrix
+https://cwiki.apache.org/confluence/pages/viewpage.action?pageId=165225375
 https://cwiki.apache.org/confluence/display/BIGTOP/Release+0.1.0+Roadmap
 https://cwiki.apache.org/confluence/display/BIGTOP/Release+0.2.0-incubating+Roadmap
 https://cwiki.apache.org/confluence/display/BIGTOP/Release+0.3.0-incubating+roadmap

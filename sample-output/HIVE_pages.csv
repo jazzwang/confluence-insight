@@ -105,6 +105,7 @@ https://cwiki.apache.org/confluence/display/Hive/CSV+Serde
 https://cwiki.apache.org/confluence/display/Hive/Dependent+Tables
 https://cwiki.apache.org/confluence/display/Hive/DeveloperDocs
 https://cwiki.apache.org/confluence/display/Hive/Druid+Integration
+https://cwiki.apache.org/confluence/pages/viewpage.action?pageId=158869886
 https://cwiki.apache.org/confluence/display/Hive/Fix+Hive+Unit+Tests+on+Hadoop+2+-+HIVE-3949
 https://cwiki.apache.org/confluence/display/Hive/Hadoop-compatible+Input-Output+Format+for+Hive
 https://cwiki.apache.org/confluence/display/Hive/Hive+0.13+release+status
@@ -132,7 +133,7 @@ https://cwiki.apache.org/confluence/display/Hive/Hive+Transactions
 https://cwiki.apache.org/confluence/display/Hive/HCatalog+Streaming+Mutation+API
 https://cwiki.apache.org/confluence/display/Hive/How-to+articles
 https://cwiki.apache.org/confluence/display/Hive/How+to+edit+the+website
-https://cwiki.apache.org/confluence/display/Hive/JdbcStorageHandler
+https://cwiki.apache.org/confluence/display/Hive/JDBC+Storage+Handler
 https://cwiki.apache.org/confluence/display/Hive/Kudu+Integration
 https://cwiki.apache.org/confluence/display/Hive/Materialized+views
 https://cwiki.apache.org/confluence/display/Hive/Metastore+TLP+Proposal
@@ -147,12 +148,14 @@ https://cwiki.apache.org/confluence/display/Hive/RelatedProjects
 https://cwiki.apache.org/confluence/display/Hive/Replication
 https://cwiki.apache.org/confluence/display/Hive/Streaming+Data+Ingest
 https://cwiki.apache.org/confluence/display/Hive/Streaming+Data+Ingest+V2
+https://cwiki.apache.org/confluence/display/Hive/Suggestion+for+DDL+Commands+in+HMS+schema+upgrade+scripts
 https://cwiki.apache.org/confluence/display/Hive/Synchronized+Metastore+Cache
 https://cwiki.apache.org/confluence/display/Hive/TeradataBinarySerde
 https://cwiki.apache.org/confluence/display/Hive/TestingDocs
 https://cwiki.apache.org/confluence/display/Hive/MetaStore+API+Tests
 https://cwiki.apache.org/confluence/display/Hive/Running+Yetus
 https://cwiki.apache.org/confluence/display/Hive/Unit+Testing+Hive+SQL
+https://cwiki.apache.org/confluence/display/Hive/Using+TiDB+as+the+Hive+Metastore+database
 https://cwiki.apache.org/confluence/display/Hive/Howl
 https://cwiki.apache.org/confluence/display/Hive/HowToCommit
 https://cwiki.apache.org/confluence/display/Hive/BecomingACommitter
@@ -171,6 +174,7 @@ https://cwiki.apache.org/confluence/display/Hive/LanguageManual+Cli
 https://cwiki.apache.org/confluence/display/Hive/LanguageManual+DDL
 https://cwiki.apache.org/confluence/display/Hive/LanguageManual+DDL+BucketedTables
 https://cwiki.apache.org/confluence/display/Hive/Managed+vs.+External+Tables
+https://cwiki.apache.org/confluence/display/Hive/Scheduled+Queries
 https://cwiki.apache.org/confluence/display/Hive/Exchange+Partition
 https://cwiki.apache.org/confluence/display/Hive/LanguageManual+DML
 https://cwiki.apache.org/confluence/display/Hive/LanguageManual+Select
