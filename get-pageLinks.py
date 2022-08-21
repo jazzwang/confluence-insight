@@ -8,6 +8,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 
 try:
@@ -32,11 +33,14 @@ url2pageId = {}
 for pageId in pageIds:
     url2pageId[pageId[0]] = pageId[2]
 
-options = Options()
-options.headless = True
-driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
+#options = Options()
+#options.headless = True
+#driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
+driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
 ## https://selenium-python.readthedocs.io/waits.html#implicit-waits
-driver.implicitly_wait(10) # seconds
+driver.implicitly_wait(60) # seconds
+driver.maximize_window()
+driver.minimize_window()
 ## https://stackoverflow.com/questions/3167494/how-often-does-python-flush-to-a-file
 ## defaul buffer size = 8192 (8 KB)
 ## change to 512 Bytes
@@ -58,5 +62,5 @@ driver.quit()
 
 ## add "pageId - contritbutor_id"
 df = pd.read_csv(space_key+"_pageHistories.csv", sep=';')
-for i in df[['pageId','contributor_id']].drop_duplicates().values.tolist(): 
+for i in df[['pageId','contributor_id']].drop_duplicates().values.tolist():
     print(str(i[0]) + ";" + i[1], file = pageLinks)

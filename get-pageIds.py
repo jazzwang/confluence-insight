@@ -11,6 +11,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 
 try:
@@ -30,11 +31,14 @@ with open(space_key+'_pages.csv','r') as f:
     next(reader, None)  # skip the input CSV headers [1][2]
     urls = list(reader)
 
-options = Options()
-options.headless = True
-driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
+#options = Options()
+#options.headless = True
+#driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
+driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
 ## https://selenium-python.readthedocs.io/waits.html#implicit-waits
-driver.implicitly_wait(10) # seconds
+driver.implicitly_wait(60) # seconds
+driver.maximize_window()
+driver.minimize_window()
 ## https://stackoverflow.com/questions/3167494/how-often-does-python-flush-to-a-file
 ## defaul buffer size = 8192 (8 KB)
 ## change to 512 Bytes
@@ -47,9 +51,9 @@ print("page_url;pageId_url;pageId;page_size;attachments_count", file=pageIds)
 for url in urls:
         page_url = url[0]
         driver.get(page_url)
-        driver.find_element_by_id("action-menu-link").click()
+        driver.find_element(By.ID, "action-menu-link").click()
         soup = BeautifulSoup(driver.page_source,"lxml")
-        
+
         for block in soup.select('#view-page-info-link'):
             pageId_url = base_url + block.get('href')
             pageId = pageId_url.split('=')[1]

@@ -12,6 +12,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 
 try:
@@ -31,11 +32,14 @@ with open(space_key+'_pageIds.csv','r') as f:
     next(reader, None)  # skip the input CSV headers [1][2]
     pageIds = list(reader)
 
-options = Options()
-options.headless = True
-driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
+#options = Options()
+#options.headless = True
+#driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
+driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
 ## https://selenium-python.readthedocs.io/waits.html#implicit-waits
-driver.implicitly_wait(10) # seconds
+driver.implicitly_wait(60) # seconds
+driver.maximize_window()
+driver.minimize_window()
 
 ## https://stackoverflow.com/questions/3167494/how-often-does-python-flush-to-a-file
 ## defaul buffer size = 8192 (8 KB)
@@ -56,7 +60,7 @@ for pageId in pageIds:
             published        = cols[6*i+2].contents[0].lstrip().rstrip()
             contributor_id   = cols[6*i+3].find('div').get('data-username')
             contributor_name = cols[6*i+3].find('a').contents[0]
-        except AttributeError: 
+        except AttributeError:
             print("#Exception `AttributeError` ----------------------")
             print(cols[6*i+3])
             contributor_id   = "anonymous"

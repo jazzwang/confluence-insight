@@ -6,6 +6,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 
 try:
@@ -20,10 +21,15 @@ except:
     print("    SPACE_KEY = HADOOP")
     exit(1)
 
-options = Options()
-options.headless = True
-driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
-driver.set_page_load_timeout(30)
+#options = Options()
+#options.headless = True
+#driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
+driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
+## https://selenium-python.readthedocs.io/waits.html#implicit-waits
+driver.implicitly_wait(60) # seconds
+driver.maximize_window()
+driver.minimize_window()
+driver.set_page_load_timeout(60)
 driver.get(home_url + "/pages/reorderpages.action?key=" + space_key)
 
 # Exception handling - page take time to load the tree structure
@@ -38,8 +44,8 @@ WebDriverWait(driver, 10).until(
 more_pages = True
 while more_pages:
     try:
-        node = driver.find_element_by_class_name("closed")
-        node.find_element_by_class_name("click-zone").click()
+        node = driver.find_element(By.CLASS_NAME, "closed")
+        node.find_element(By.CLASS_NAME, "click-zone").click()
     except:
         more_pages = False
 
