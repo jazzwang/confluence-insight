@@ -105,3 +105,4 @@ venv.bak/
 
 # temp files
 sample-output
+.aider*
