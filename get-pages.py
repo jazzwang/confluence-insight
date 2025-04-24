@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import os
+import os, time
 from bs4 import BeautifulSoup
 from playwright.sync_api import sync_playwright
 
@@ -19,6 +19,7 @@ except Exception as e:
 with sync_playwright() as p:
     browser = p.chromium.launch(headless=False)
     page = browser.new_page()
+    page.set_default_navigation_timeout(60000) # Set timeout to 60 seconds
     page.goto(home_url + "/pages/reorderpages.action?key=" + space_key)
 
     # Wait for the tree structure to load
@@ -28,9 +29,10 @@ with sync_playwright() as p:
     more_pages = True
     while more_pages:
         try:
-            node = page.query_selector("li.closed div.click-zone")
+            node = page.query_selector(".closed .click-zone")
             if node:
                 node.click()
+                time.sleep(0.1) # wait 100ms for UI to remove .closed status
             else:
                 more_pages = False
         except Exception as e:
@@ -46,4 +48,5 @@ with sync_playwright() as p:
     for block in soup.select('#tree-div a[href^="/"]'):
         print(base_url + block.get('href'), file=pages)
 
+    page.context.storage_state(path='storage_state.json')
     browser.close()

@@ -40,7 +40,7 @@ driver.implicitly_wait(60) # seconds
 driver.maximize_window()
 driver.minimize_window()
 ## https://stackoverflow.com/questions/3167494/how-often-does-python-flush-to-a-file
-## defaul buffer size = 8192 (8 KB)
+## default buffer size = 8192 (8 KB)
 ## change to 512 Bytes
 ## make it flush to dish faster because I use `wc` to check the progress of each task
 pageIds = open(space_key+"_pageIds.csv","w+",512)
