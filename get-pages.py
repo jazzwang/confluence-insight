@@ -18,7 +18,12 @@ except Exception as e:
 
 with sync_playwright() as p:
     browser = p.chromium.launch(headless=False)
-    page = browser.new_page()
+    if os.path.exists('storage_state.json'):
+      print("[INFO] storage_state.json found. loading into browser context.")
+      context = browser.new_context(storage_state='storage_state.json')
+    else:
+      context = browser.new_context()
+    page = context.new_page()
     page.set_default_navigation_timeout(60000) # Set timeout to 60 seconds
     page.goto(home_url + "/pages/reorderpages.action?key=" + space_key)
 
@@ -49,4 +54,6 @@ with sync_playwright() as p:
         print(base_url + block.get('href'), file=pages)
 
     page.context.storage_state(path='storage_state.json')
+    page.keyboard.press('Ctrl+S')
+    time.sleep(30.0) #  wait 30 seconds and close the browser
     browser.close()
