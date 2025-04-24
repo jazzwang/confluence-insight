@@ -4,15 +4,9 @@
 ## [1] https://stackoverflow.com/questions/14257373/skip-the-headers-when-editing-a-csv-file-using-python
 ## [2] https://docs.python.org/3/library/functions.html#next
 
-import os, csv, re
+import os, csv, re, time
 from bs4 import BeautifulSoup
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.service import Service as ChromeService
-from webdriver_manager.chrome import ChromeDriverManager
+from playwright.sync_api import sync_playwright
 
 try:
     home_url  = os.environ["HOME_URL"]
@@ -31,36 +25,37 @@ with open(space_key+'_pages.csv','r') as f:
     next(reader, None)  # skip the input CSV headers [1][2]
     urls = list(reader)
 
-#options = Options()
-#options.headless = True
-#driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
-driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
-## https://selenium-python.readthedocs.io/waits.html#implicit-waits
-driver.implicitly_wait(60) # seconds
-driver.maximize_window()
-driver.minimize_window()
-## https://stackoverflow.com/questions/3167494/how-often-does-python-flush-to-a-file
-## default buffer size = 8192 (8 KB)
-## change to 512 Bytes
-## make it flush to dish faster because I use `wc` to check the progress of each task
 pageIds = open(space_key+"_pageIds.csv","w+",512)
 
 ## Write CSV headers
 print("page_url;pageId_url;pageId;page_size;attachments_count", file=pageIds)
 
-for url in urls:
+with sync_playwright() as p:
+    browser = p.chromium.launch(headless=False)
+    if os.path.exists('storage_state.json'):
+      print("[INFO] storage_state.json found. loading into browser context.")
+      context = browser.new_context(storage_state='storage_state.json')
+    else:
+      context = browser.new_context()
+    page = context.new_page()
+    page.set_default_navigation_timeout(60000) # Set timeout to 60 seconds
+
+    for url in urls:
         page_url = url[0]
-        driver.get(page_url)
-        driver.find_element(By.ID, "action-menu-link").click()
-        soup = BeautifulSoup(driver.page_source,"lxml")
+        page.goto(page_url)
+        # wait for page to load
+        page.wait_for_selector("#action-menu-link")
+        page.click("#action-menu-link")
+
+        soup = BeautifulSoup(page.content(), "lxml")
 
         for block in soup.select('#view-page-info-link'):
             pageId_url = base_url + block.get('href')
             pageId = pageId_url.split('=')[1]
-            page_size = str(len(driver.page_source))
+            page_size = str(len(page.content()))
 
-        attachments_count = re.split('[\(\)]',soup.select('.action-view-attachments span')[0].contents[2])[1]
+        attachments_count = re.split('[\\(\\)]',soup.select('.action-view-attachments span')[0].contents[2])[1]
 
         print(page_url + ";" + pageId_url + ";" + pageId + ";" + page_size + ";" + attachments_count, file=pageIds)
 
-driver.quit()
+    browser.close()
