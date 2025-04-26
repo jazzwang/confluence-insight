@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import os, csv
+import os, csv, time
 import pandas as pd
 from bs4 import BeautifulSoup
 from playwright.sync_api import sync_playwright
@@ -35,6 +35,7 @@ with sync_playwright() as p:
     else:
       context = browser.new_context()
     page = context.new_page()
+    page.set_default_navigation_timeout(60000) # Set timeout to 60 seconds
 
     ## https://stackoverflow.com/questions/3167494/how-often-does-python-flush-to-a-file
     ## default buffer size = 8192 (8 KB)
@@ -54,8 +55,8 @@ with sync_playwright() as p:
             if url in url2pageId:
                 print(pageId[2] + ";" + url2pageId[url], file = pageLinks)
 
-    page.close()
-    context.close()
+    page.context.storage_state(path='storage_state.json')
+    time.sleep(10) # wait 10 seconds before closing
     browser.close()
 
 ## add "pageId - contritbutor_id"

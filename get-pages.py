@@ -54,6 +54,5 @@ with sync_playwright() as p:
         print(base_url + block.get('href'), file=pages)
 
     page.context.storage_state(path='storage_state.json')
-    page.keyboard.press('Ctrl+S')
-    time.sleep(30.0) #  wait 30 seconds and close the browser
+    time.sleep(10) # wait 10 seconds before closing
     browser.close()

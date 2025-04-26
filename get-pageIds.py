@@ -59,4 +59,5 @@ with sync_playwright() as p:
         print(page_url + ";" + pageId_url + ";" + pageId + ";" + page_size + ";" + attachments_count, file=pageIds)
 
     page.context.storage_state(path='storage_state.json')
+    time.sleep(10) # wait 10 seconds before closing
     browser.close()

@@ -4,7 +4,7 @@
 ## [1] https://stackoverflow.com/questions/14257373/skip-the-headers-when-editing-a-csv-file-using-python
 ## [2] https://docs.python.org/3/library/functions.html#next
 
-import os, csv
+import os, csv, time
 import pandas as pd  # Import pandas library
 from bs4 import BeautifulSoup
 from playwright.sync_api import sync_playwright
@@ -71,5 +71,6 @@ with sync_playwright() as p:
     df3 = pd.merge(df1,df2,on='pageId')
     df3.to_csv(space_key+"_pageMerged.csv")
 
-page.context.storage_state(path='storage_state.json')
-browser.close()
+    page.context.storage_state(path='storage_state.json')
+    time.sleep(10) # wait 10 seconds before closing
+    browser.close()
