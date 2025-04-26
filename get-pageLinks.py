@@ -59,7 +59,7 @@ with sync_playwright() as p:
     time.sleep(10) # wait 10 seconds before closing
     browser.close()
 
-## add "pageId - contritbutor_id"
+## add "pageId - contributor_id"
 df = pd.read_csv(space_key+"_pageHistories.csv", sep=';')
 for i in df[['pageId','contributor_id']].drop_duplicates().values.tolist():
     print(str(i[0]) + ";" + i[1], file = pageLinks)
