@@ -20,12 +20,12 @@ except:
     print("    SPACE_KEY = HADOOP")
     exit(1)
 
-with open(space_key+'_pages.csv','r') as f:
+with open(space_key+'_pages.csv','r', encoding='utf-8') as f:
     reader = csv.reader(f)
     next(reader, None)  # skip the input CSV headers [1][2]
     urls = list(reader)
 
-pageIds = open(space_key+"_pageIds.csv","w+",512)
+pageIds = open(space_key+"_pageIds.csv","w+",512, encoding='utf-8')
 
 ## Write CSV headers
 print("page_url;pageId_url;pageId;page_size;attachments_count", file=pageIds)

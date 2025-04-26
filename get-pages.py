@@ -45,7 +45,7 @@ with sync_playwright() as p:
             break
 
     # Write CSV headers
-    pages = open(space_key + '_pages.csv', 'w+')
+    pages = open(space_key + '_pages.csv', 'w+', encoding='utf-8')
     print("page_url", file=pages)
 
     soup = BeautifulSoup(page.content(), "lxml")

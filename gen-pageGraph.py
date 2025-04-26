@@ -16,14 +16,14 @@ except:
     print("    SPACE_KEY = HADOOP")
     exit(1)
 
-with open(space_key+'_pageLinks.csv','r') as f:
+with open(space_key+'_pageLinks.csv','r', encoding='utf-8') as f:
     reader = csv.reader(f, delimiter=';')
     next(reader, None)  # skip the input CSV headers [1][2]
     pageLinks = list(reader)
 
 nodes = {}
 
-df = pd.read_csv(space_key+"_pageHistories.csv", sep=';')
+df = pd.read_csv(space_key+"_pageHistories.csv", sep=';', encoding='utf-8')
 for i in df[['contributor_id','contributor_name']].drop_duplicates().values.tolist():
     nodes[i[0]]={ 'name' :  i[1] , 'type' : 'contributor' }
 

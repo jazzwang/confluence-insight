@@ -17,7 +17,7 @@ except:
     print("    SPACE_KEY = HADOOP")
     exit(1)
 
-with open(space_key+'_pageIds.csv','r') as f:
+with open(space_key+'_pageIds.csv','r', encoding='utf-8') as f:
     reader = csv.reader(f, delimiter=';')
     next(reader, None)  # skip the input CSV headers [1][2]
     pageIds = list(reader)
@@ -41,7 +41,7 @@ with sync_playwright() as p:
     ## default buffer size = 8192 (8 KB)
     ## change to 512 Bytes
     ## make it flush to dish faster because I use `wc` to check the progress of each task
-    pageLinks = open(space_key+"_pageLinks.csv","w+",512)
+    pageLinks = open(space_key+"_pageLinks.csv","w+",512, encoding='utf-8')
     ## Write CSV headers
     print("pageId;linkedId", file = pageLinks)
 
@@ -60,7 +60,7 @@ with sync_playwright() as p:
     browser.close()
 
 ## add "pageId - contributor_id"
-df = pd.read_csv(space_key+"_pageHistories.csv", sep=';')
+df = pd.read_csv(space_key+"_pageHistories.csv", sep=';', encoding='utf-8')
 for i in df[['pageId','contributor_id']].drop_duplicates().values.tolist():
     print(str(i[0]) + ";" + i[1], file = pageLinks)
 

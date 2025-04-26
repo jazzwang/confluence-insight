@@ -5,7 +5,7 @@
 UnicodeEncodeError: 'charmap' codec can't encode character '\u010d' in position 55: character maps to <undefined>
 ```
 - ( 2025-04-26 10:52:36 )
-- Steps to reproduce
+- Steps to
 ```bash
 jazzw@JazzBook:~/git/confluence-insight$ bin/sample-run.sh BIGTOP
 [INFO] storage_state.json found. loading into browser context.
@@ -157,3 +157,17 @@ Traceback (most recent call last):
 UnicodeDecodeError: 'utf-8' codec can't decode byte 0xe9 in position 6339: invalid continuation byte
 jazzw@JazzBook:~/git/confluence-insight$
 ```
+- 根據這段錯誤，應該是 Windows 上才會遇到。因為這裡用的 encoding 是 `CP1252` (出現在 `python\current\Lib\encodings\cp1252.py`)
+  - https://g.co/gemini/share/cee50a958173
+  > CP1252, also known as Windows-1252 or sometimes (incorrectly) as "ANSI," is a single-byte character encoding that was widely used by default in Microsoft Windows for Western European languages.
+```bash
+
+Traceback (most recent call last):
+  File "C:\Users\jazzw\git\confluence-insight\get-pageHistories.py", line 65, in <module>
+    print(pageId[2] + ";" + version + ";" + published + ";" + contributor_id + ";" + contributor_name, file = pageHistories)
+  File "C:\Users\jazzw\scoop\apps\python\current\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u010d' in position 55: character maps to <undefined>
+```
+- 解法：強迫在 `open()` 檔案時，加入 `encoding='utf-8'`，就能避開在 Windows 平台運行時遇到的寫檔/讀檔錯誤。（因為網頁內容多半是 `UTF-8`，若要把 `UTF-8` 字串寫到 `CP1252` 的話，就會遇到這種典型的字集錯誤。

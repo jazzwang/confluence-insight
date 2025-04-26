@@ -21,7 +21,7 @@ except:
     print("    SPACE_KEY = HADOOP")
     exit(1)
 
-with open(space_key+'_pageIds.csv','r') as f:
+with open(space_key+'_pageIds.csv','r', encoding='utf-8') as f:
     reader = csv.reader(f, delimiter=';')
     next(reader, None)  # skip the input CSV headers [1][2]
     pageIds = list(reader)
@@ -40,7 +40,7 @@ with sync_playwright() as p:
     ## default buffer size = 8192 (8 KB)
     ## change to 512 Bytes
     ## make it flush to dish faster because I use `wc` to check the progress of each task
-    pageHistories = open(space_key+"_pageHistories.csv","w+", 512)
+    pageHistories = open(space_key+"_pageHistories.csv","w+", 512, encoding='utf-8')
     ## Write CSV headers
     print("pageId;version;published;contributor_id;contributor_name", file = pageHistories)
 
@@ -64,6 +64,7 @@ with sync_playwright() as p:
 
             print(pageId[2] + ";" + version + ";" + published + ";" + contributor_id + ";" + contributor_name, file = pageHistories)
 
+    pageHistories.flush()
     pageHistories.close()
 
     df1 = pd.read_csv(space_key+"_pageIds.csv", sep=';')
@@ -74,6 +75,3 @@ with sync_playwright() as p:
     page.context.storage_state(path='storage_state.json')
     time.sleep(10) # wait 10 seconds before closing
     browser.close()
-
-pageHistories.flush()
-pageHistories.close()
