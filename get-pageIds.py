@@ -58,4 +58,5 @@ with sync_playwright() as p:
 
         print(page_url + ";" + pageId_url + ";" + pageId + ";" + page_size + ";" + attachments_count, file=pageIds)
 
+    page.context.storage_state(path='storage_state.json')
     browser.close()

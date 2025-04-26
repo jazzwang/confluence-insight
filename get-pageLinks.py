@@ -3,13 +3,7 @@
 import os, csv
 import pandas as pd
 from bs4 import BeautifulSoup
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.service import Service as ChromeService
-from webdriver_manager.chrome import ChromeDriverManager
+from playwright.sync_api import sync_playwright
 
 try:
     home_url  = os.environ["HOME_URL"]
@@ -33,32 +27,36 @@ url2pageId = {}
 for pageId in pageIds:
     url2pageId[pageId[0]] = pageId[2]
 
-#options = Options()
-#options.headless = True
-#driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
-driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
-## https://selenium-python.readthedocs.io/waits.html#implicit-waits
-driver.implicitly_wait(60) # seconds
-driver.maximize_window()
-driver.minimize_window()
-## https://stackoverflow.com/questions/3167494/how-often-does-python-flush-to-a-file
-## defaul buffer size = 8192 (8 KB)
-## change to 512 Bytes
-## make it flush to dish faster because I use `wc` to check the progress of each task
-pageLinks = open(space_key+"_pageLinks.csv","w+",512)
-## Write CSV headers
-print("pageId;linkedId", file = pageLinks)
+with sync_playwright() as p:
+    browser = p.chromium.launch(headless=False)
+    if os.path.exists('storage_state.json'):
+      print("[INFO] storage_state.json found. loading into browser context.")
+      context = browser.new_context(storage_state='storage_state.json')
+    else:
+      context = browser.new_context()
+    page = context.new_page()
 
-for pageId in pageIds:
-    driver.get(pageId[1])
-    soup = BeautifulSoup(driver.page_source,"lxml")
-    cols = soup.select("table.pageInfoTable a[href^='/']")
-    for i in cols:
-        url = base_url + i.get('href')
-        if url in url2pageId:
-            print(pageId[2] + ";" + url2pageId[url], file = pageLinks)
+    ## https://stackoverflow.com/questions/3167494/how-often-does-python-flush-to-a-file
+    ## default buffer size = 8192 (8 KB)
+    ## change to 512 Bytes
+    ## make it flush to dish faster because I use `wc` to check the progress of each task
+    pageLinks = open(space_key+"_pageLinks.csv","w+",512)
+    ## Write CSV headers
+    print("pageId;linkedId", file = pageLinks)
 
-driver.quit()
+    for pageId in pageIds:
+        page.goto(pageId[1])
+        page.wait_for_selector("#action-menu-link")     # make sure that the page is loaded correctly
+        soup = BeautifulSoup(page.content(), "lxml")
+        cols = soup.select("table.pageInfoTable a[href^='/']")
+        for i in cols:
+            url = base_url + i.get('href')
+            if url in url2pageId:
+                print(pageId[2] + ";" + url2pageId[url], file = pageLinks)
+
+    page.close()
+    context.close()
+    browser.close()
 
 ## add "pageId - contritbutor_id"
 df = pd.read_csv(space_key+"_pageHistories.csv", sep=';')
