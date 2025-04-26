@@ -56,3 +56,6 @@ with sync_playwright() as p:
     page.context.storage_state(path='storage_state.json')
     time.sleep(10) # wait 10 seconds before closing
     browser.close()
+
+    pages.flush()
+    pages.close()

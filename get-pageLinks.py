@@ -63,3 +63,6 @@ with sync_playwright() as p:
 df = pd.read_csv(space_key+"_pageHistories.csv", sep=';')
 for i in df[['pageId','contributor_id']].drop_duplicates().values.tolist():
     print(str(i[0]) + ";" + i[1], file = pageLinks)
+
+pageLinks.flush()
+pageLinks.close()
